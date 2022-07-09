@@ -1,11 +1,13 @@
 package com.springframework.petclinic.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
 @Data
-public class Pet {
+@EqualsAndHashCode(callSuper = true)
+public class Pet extends BaseEntity{
     private PetType petType;
     private Owner owner;
     private LocalDate birthDate;
