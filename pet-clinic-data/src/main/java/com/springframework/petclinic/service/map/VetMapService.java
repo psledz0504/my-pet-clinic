@@ -1,6 +1,7 @@
 package com.springframework.petclinic.service.map;
 
 import com.springframework.petclinic.model.Vet;
+import com.springframework.petclinic.service.VetService;
 
-public class VetMapService extends AbstractMapService<Vet, Long> {
+public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
 }

@@ -3,13 +3,10 @@ package com.springframework.petclinic.service.map;
 import com.springframework.petclinic.model.BaseEntity;
 import com.springframework.petclinic.service.CrudService;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public abstract class AbstractMapService <T extends BaseEntity, ID> implements CrudService<T, ID> {
-    protected Map<ID, T> map = new HashMap<>();
+public abstract class AbstractMapService <T extends BaseEntity, ID extends Long>{
+    protected Map<Long, T> map = new HashMap<>();
 
     public Set<T> findAll(){
         return new HashSet<>(map.values());
@@ -20,7 +17,14 @@ public abstract class AbstractMapService <T extends BaseEntity, ID> implements C
     }
 
     public T save(T t){
-        map.put((ID) t.getId(), t);
+        if(t != null){
+            if(t.getId() == null){
+                t.setId(getNextId());
+            }
+            map.put((ID) t.getId(), t);
+        }else{
+            throw new RuntimeException("Object cannot be null");
+        }
         return t;
     }
 
@@ -32,6 +36,17 @@ public abstract class AbstractMapService <T extends BaseEntity, ID> implements C
         map.entrySet().removeIf(
                 (x) -> {return x.getValue().equals(t);}
         );
+    }
+
+    private Long getNextId(){
+        Long nextId = null;
+        try {
+            nextId = Collections.max(map.keySet()) + 1;
+        } catch (NoSuchElementException e) {
+            nextId = 1L;
+        }
+
+        return nextId;
     }
 
 }

@@ -8,6 +8,6 @@ import javax.persistence.Entity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Person extends BaseEntity{
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
 }
