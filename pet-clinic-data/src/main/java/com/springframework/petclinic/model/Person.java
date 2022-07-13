@@ -1,14 +1,16 @@
 package com.springframework.petclinic.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+//@Data
+//@EqualsAndHashCode(callSuper = true)
+@Setter
+@Getter
 @MappedSuperclass
 public abstract class Person extends BaseEntity{
     @Column(name = "first_name")
