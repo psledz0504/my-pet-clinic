@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -29,6 +30,11 @@ public class OwnerSDJpaService implements OwnerService {
         Set<Owner> result = new HashSet<>();
         ownerRepository.findAll().forEach(result::add);
         return result;
+    }
+
+    @Override
+    public List<Owner> findAllByLastNameContainingIgnoreCase(String lastName) {
+        return ownerRepository.findAllByLastNameContainingIgnoreCase(lastName);
     }
 
     @Override
