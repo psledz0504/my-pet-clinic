@@ -11,6 +11,9 @@ import java.io.Serializable;
 //@Data
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+//@Builder
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
     @Id
