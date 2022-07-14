@@ -16,6 +16,9 @@
         </thead>
         <tbody>
         <tr th:each="owner : ${owners}">
+            <td>
+                <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a>
+            </td>
             <td th:text="${owner.id}">1</td>
             <td th:text="${owner.firstName}">Joe</td>
             <td th:text="${owner.lastName}">Buck</td>
