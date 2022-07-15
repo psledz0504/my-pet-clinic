@@ -23,7 +23,7 @@ public class Pet extends BaseEntity{
         this.name = name;
         this.owner = owner;
         this.petType = petType;
-        if(visits != null || visits.size() > 0) this.visits = visits;
+        if(visits != null && !visits.isEmpty()) this.visits = visits;
     }
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
