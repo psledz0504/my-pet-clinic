@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -47,6 +48,7 @@ class PetControllerTest {
     MockMvc mockMvc;
     Set<PetType> petTypes;
     Owner owner;
+    Owner ownerWithPet;
 
     @BeforeEach
     void setUp() {
@@ -55,6 +57,9 @@ class PetControllerTest {
         petTypes.add(PetType.builder().id(1L).name("Cat").build());
         petTypes.add(PetType.builder().id(2L).name("Dog").build());
         owner = Owner.builder().id(1L).build();
+        Set<Pet> pets = new HashSet<>();
+        pets.add(Pet.builder().id(3L).name("test").build());
+        ownerWithPet = Owner.builder().id(2L).pets(pets).build();
     }
 
     @Test
@@ -69,6 +74,19 @@ class PetControllerTest {
                 .andExpect(model().attributeExists("pet"));
     }
 
+    @Test
+    void processCreatePetFormNameNotProvidedShouldRedirect() throws Exception {
+        when(ownerService.findById(anyLong())).thenReturn(owner);
+        when(petTypeService.findAll()).thenReturn(petTypes);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/1/pets/new")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "test"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(view().name("redirect:/owners/1"))
+                .andExpect(model().attributeExists("owner"))
+                .andExpect(model().attributeExists("pet"));
+    }
     @Test
     void processCreatePetFormNameNotProvidedShouldNotRedirect() throws Exception {
         when(ownerService.findById(anyLong())).thenReturn(owner);

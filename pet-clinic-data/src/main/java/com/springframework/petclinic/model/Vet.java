@@ -15,6 +15,10 @@ import java.util.Set;
 @Table(name = "vets")
 public class Vet extends Person{
 
+    public int numberOfSpecialities(){
+        return specialities.size();
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "vet_specialities",
             joinColumns = @JoinColumn(name = "vet_id"),
