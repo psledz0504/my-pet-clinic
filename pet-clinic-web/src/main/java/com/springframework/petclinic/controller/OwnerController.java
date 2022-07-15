@@ -41,6 +41,8 @@ public class OwnerController {
         return "owners/ownerDetails";
     }
 
+
+
     @RequestMapping({"/find"})
     public String findOwners(Model model){
         model.addAttribute("owner", new Owner());
